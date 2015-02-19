@@ -1,10 +1,10 @@
 [package]
-
 name = "bitreserve"
 version = "0.0.1"
 authors = ["Miguel Palhas <mpalhas@gmail.com>"]
 
 [dependencies]
-
-"hyper" = "*"
 "rustc-serialize" = "*"
+
+[dependencies.hyper]
+git = "https://github.com/hyperium/hyper"

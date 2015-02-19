@@ -1,4 +1,4 @@
-#[derive(Decodable, Encodable)]
+#[derive(RustcDecodable, RustcEncodable)]
 pub struct Phone {
     pub id: String,
     pub verified: bool,
