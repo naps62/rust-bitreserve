@@ -4,8 +4,8 @@ use super::phone;
 pub struct User {
     pub username: String,
     pub email: String,
-    pub first_name: String,
-    pub last_name: String,
+    pub firstName: String,
+    pub lastName: String,
     pub country: String,
     pub state: String,
     pub currencies: Vec<String>,

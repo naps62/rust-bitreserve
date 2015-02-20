@@ -1,7 +1,9 @@
+pub mod auth_token;
 pub mod ticker;
-pub use self::ticker::Ticker;
 pub mod phone;
-
-pub use self::phone::Phone;
 pub mod user;
+
+pub use self::auth_token::AuthToken;
+pub use self::ticker::Ticker;
+pub use self::phone::Phone;
 pub use self::user::User;
