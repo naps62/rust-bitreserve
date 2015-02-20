@@ -19,14 +19,24 @@ fn main() {
     println!("Your token is: {}", auth_token);
 
     let mut bitreserve = Client::new(auth_token);
-    let user = bitreserve.me().unwrap();
-    println!("{}", user.email);
+    let cards = bitreserve.my_cards().unwrap();
 
-    // let mut res = client.get("https://api.bitreserve.org/v0/ticker").send().unwrap();
+    for i in range(0, cards.len()) {
+        println!("{} [{}] - {} {}", i, cards[i].label, cards[i].available, cards[i].currency);
+    }
 
-    // let nata: Nata = json::decode("{ \"x\": \"xxx\", \"y\": \"yyy\" }").unwrap();
+    let card_index: usize = prompt("\nChoose a card to transfer from: ").parse().unwrap();
+    let amount: f64 = prompt("How much: ").parse().unwrap();
+    let dest = prompt("Destination: ");
 
-    // println!("{}", nata.x);
+    // create transaction
+    let card = &cards[card_index];
+    let transaction = bitreserve.create_transaction(card.id.clone(), amount, card.currency.clone(), dest).unwrap();
+
+    println!("{}", transaction.status);
+    
+    // commit transaction
+    
 }
 
 fn request_new_token() -> String {

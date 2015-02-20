@@ -7,7 +7,7 @@ pub struct User {
     pub firstName: String,
     pub lastName: String,
     pub country: String,
-    pub state: String,
+    // pub state: String,
     pub currencies: Vec<String>,
     pub phones: Vec<phone::Phone>,
 }

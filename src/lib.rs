@@ -1,4 +1,4 @@
-#![feature(core)]
+#![feature(core, io)]
 #![allow(dead_code)]
 
 extern crate "rustc-serialize" as rustc_serialize;
