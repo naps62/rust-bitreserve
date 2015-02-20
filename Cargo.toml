@@ -4,8 +4,8 @@ version = "0.0.1"
 authors = ["Miguel Palhas <mpalhas@gmail.com>"]
 
 [dependencies]
-"rustc-serialize" = "*"
-"hyper" = "0.1.9"
+"rustc-serialize" = "0.2.14"
+# "hyper" = "0.1.13"
 
-# [dependencies.hyper]
-# git = "https://github.com/hyperium/hyper"
+[dependencies.hyper]
+git = "https://github.com/hyperium/hyper"

@@ -1,43 +1,42 @@
-#[derive(Copy, Clone, PartialEq, Debug)]
+#[derive(Clone, PartialEq, Debug)]
 struct Bearer(pub String);
 
-use hyper::header;
-use hyper::header::HeaderFormat;
 impl_header!(Bearer, "Bearer", String);
-use hyper::header::common::authorization::{ Authorization, Basic };
+
 use hyper;
-use std::net;
-use hyper::client::response::Response;
+use hyper::header;
+use hyper::net;
+use hyper::client::Response;
 
 
 pub struct Client {
-    api_root: str,
+    api_root: String,
     bearer: Bearer,
-    hyper: hyper::client::Client<net::HttpConnector>,
+    hyper: hyper::Client<net::HttpConnector<'static>>,
 }
 
 impl Client {
-    fn get_token(username: String, password: String) -> String {
-        let basic_auth_header = Authorization(Basic {
+    pub fn get_token(username: String, password: String) -> String {
+        let basic_auth_header = header::Authorization(header::Basic {
             username: username,
             password: Some(password)
         });
 
-        let response = hyper::Client::new().get("https://api.bitreserve.org/v0/me/tokens").header(basic_auth_header).send().unwrap();
+        let mut response = hyper::Client::new().get("https://api.bitreserve.org/v0/me/tokens").header(basic_auth_header).send().unwrap();
 
-        println!("{}", response.read_to_string());
+        println!("{}", response.read_to_string().unwrap());
         "asd".to_string()
     }
 
     fn new(token: String) -> Client {
         Client {
-            api_root: "https://api.bitreserve.org/v0/",
+            api_root: "https://api.bitreserve.org/v0/".to_string(),
             bearer: Bearer(token),
-            client: hyper::client::Client::new(),
+            hyper: hyper::Client::new(),
         }
     }
 
-    fn get(&self, path: String) -> Response {
-        self.hyper.get(path).send().unwrap()
+    fn get(&mut self, path: String) -> Response {
+        self.hyper.get(path.as_slice()).send().unwrap()
     }
 }
