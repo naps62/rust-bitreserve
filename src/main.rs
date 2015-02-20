@@ -31,7 +31,9 @@ fn main() {
 
     // create transaction
     let card = &cards[card_index];
-    let transaction = bitreserve.create_transaction(card.id.clone(), amount, card.currency.clone(), dest).unwrap();
+
+    let request = entities::TransactionRequest::new(card.id, curency, amount);
+    let transaction = bitreserve.create_transaction(request, dest).unwrap();
 
     println!("{}", transaction.status);
     

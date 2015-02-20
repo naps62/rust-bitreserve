@@ -12,4 +12,4 @@ pub use self::ticker::Ticker;
 pub use self::phone::Phone;
 pub use self::user::User;
 pub use self::card::Card;
-pub use self::transaction::Transaction;
+pub use self::transaction::{ Transaction, Denomination, TransactionRequest };

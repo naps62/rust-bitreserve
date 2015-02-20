@@ -42,9 +42,10 @@ impl Client {
         self.get("me/cards")
     }
 
-    pub fn create_transaction(&mut self, card_id: String, amount: f64, currency: String, destination: String) -> Result<entities::Transaction, json::DecoderError> {
+    pub fn create_transaction(&mut self, request: entities::TransactionRequest, destination: String) -> Result<entities::Transaction, json::DecoderError> {
+        # TODO
         let mut payload = HashMap::new();
-        payload.insert("demonination", "A Rust test");
+        payload.insert("demonination[currency]", "A Rust test");
         paload
         let mut response = self.hyper
             .post(format!("https://api.bitreserve.org/v0/me/cards/{}/transactions", card_id).as_slice())
