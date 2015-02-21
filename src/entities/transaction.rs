@@ -7,22 +7,23 @@ pub struct Transaction {
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct Denomination {
     pub currency: String,
-    pub amoun: f64,
+    pub amount: f64,
 }
 
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct TransactionRequest {
-    pub card_id: String,
+    pub destination: String,
     pub denomination: Denomination
 }
 
 impl TransactionRequest {
-    pub new(card_id: String, amount: f64, currency: String, destination: String) -> Result<entities::Transaction, json::DecoderError> {
+   pub fn new(amount: f64, currency: String, destination: String) -> TransactionRequest {
         TransactionRequest {
-            card_id: card_id,
+            destination: destination,
             denomination: Denomination {
                 currency: currency,
                 amount: amount,
             }
         }
+    }
 }

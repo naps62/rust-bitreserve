@@ -17,6 +17,8 @@ use std::collections::HashMap;
 
 use rustc_serialize::{ json, Decodable };
 
+use url::form_urlencoded;
+
 use entities;
 
 pub struct Client {
@@ -42,16 +44,12 @@ impl Client {
         self.get("me/cards")
     }
 
-    pub fn create_transaction(&mut self, request: entities::TransactionRequest, destination: String) -> Result<entities::Transaction, json::DecoderError> {
-        # TODO
-        let mut payload = HashMap::new();
-        payload.insert("demonination[currency]", "A Rust test");
-        paload
+    pub fn create_transaction(&mut self, card_id: String, request: entities::TransactionRequest) -> Result<entities::Transaction, json::DecoderError> {
+        let body = vec![("denomination[currency]", "BTC"), ("denomination[amount]", "0"), ("destination", "mpalhas@gmail.com")];
         let mut response = self.hyper
             .post(format!("https://api.bitreserve.org/v0/me/cards/{}/transactions", card_id).as_slice())
             .header(self.auth_header.clone())
-            // .body(format!("denomination[currency]={}&denomination[amount]={}&destination={}", amount, currency, destination).as_slice())
-            .body(json::encode(&payload).unwrap().as_slice())
+            .body(&*form_urlencoded::serialize(body.into_iter()))
             .send()
             .unwrap();
 

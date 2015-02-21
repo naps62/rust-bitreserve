@@ -3,6 +3,8 @@
 
 extern crate "rustc-serialize" as rustc_serialize;
 #[macro_use] extern crate hyper;
+extern crate url;
+
 mod entities;
 mod client;
 
@@ -32,8 +34,8 @@ fn main() {
     // create transaction
     let card = &cards[card_index];
 
-    let request = entities::TransactionRequest::new(card.id, curency, amount);
-    let transaction = bitreserve.create_transaction(request, dest).unwrap();
+    let request = entities::TransactionRequest::new(amount, card.currency.clone(), dest);
+    let transaction = bitreserve.create_transaction(card.id.clone(), request).unwrap();
 
     println!("{}", transaction.status);
     
